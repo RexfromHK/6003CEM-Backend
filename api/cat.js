@@ -58,6 +58,26 @@ router.get('/getcat/:catid', (req, res) => {
     });
 });
 
+// get cat by search
+router.get('/search', (req, res) => {
+    const { name, age, breed, status, location } = req.query;
+    const query = `SELECT * FROM cat 
+                 WHERE name LIKE '%${name}%' 
+                   AND age LIKE '%${age}%' 
+                   AND Breed LIKE '%${breed}%' 
+                   AND status LIKE '%${status}%' 
+                   AND location LIKE '%${location}%'`;
+
+    connection.query(query, (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Database query failed' });
+        }
+
+        return res.json(results);
+    });
+});
+
 
 // delete cat
 router.delete('/delete/:catid', (req, res) => {
