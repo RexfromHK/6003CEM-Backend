@@ -5,7 +5,7 @@ const app = express();
 const cors = require('cors'); 
 app.use(cors());
 
-
+// add message to db
 router.post('/add', (req, res) => {
     const { senderId, receiverId, message } = req.body;
     const query = `INSERT INTO message (sender_id, receiver_id, message) VALUES (?, ?, ?)`;
@@ -19,7 +19,7 @@ router.post('/add', (req, res) => {
     });
 });
 
-
+// get message from db
 router.get('/get/:userId', (req, res) => {
     const userId = req.params.userId;
     const query = `SELECT * FROM message WHERE sender_id = ? OR receiver_id = ? order by created_at desc`;
@@ -33,7 +33,7 @@ router.get('/get/:userId', (req, res) => {
     });
 });
 
-// delete cat
+// delete cat from db
 router.delete('/delete/:messageid', (req, res) => {
     const messageid = req.params.messageid;
     const sql = 'DELETE FROM message WHERE id = ?';

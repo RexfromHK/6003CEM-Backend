@@ -7,11 +7,11 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// 创建 Multer 文件上传中间件
+// Create Multer file upload middleware
 const upload = multer({ dest: 'uploads/' });
 
 app.put('test/:catid', (req, res) => {
-    // 處理PUT請求的程式碼
+    //  handle PUT requests
 });
 
 
@@ -94,13 +94,13 @@ router.delete('/delete/:catid', (req, res) => {
     });
 });
 
+// update cat
 router.put('/update/:catid', (req, res) => {
     const catid = req.params.catid;
     const updatedCat = req.body;
     const sql = `UPDATE cat SET name = ?, age = ?, image = ?, Breed = ?, location = ?, status = ? WHERE id = ?`;
     const values = [updatedCat.name, updatedCat.age, updatedCat.image, updatedCat.Breed, updatedCat.location, updatedCat.status, catid];
 
-    //执行SQL语句更新数据
     connection.query(sql, values, (err, result) => {
         if (err) throw err;
         console.log(`${result.affectedRows} record(s) updated`);

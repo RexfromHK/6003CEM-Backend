@@ -6,18 +6,18 @@ const connection = require('./db');
 router.post('/add', (req, res) => {
     const { catid, userId } = req.body;
     console.log(catid);
-    // 查詢 favorite 表中是否已存在該catid
+    // Query whether the catid already exists in the favorite table
     connection.query(
         'SELECT * FROM favorite WHERE cat_id = ?',
         [catid],
         (error, results, fields) => {
             if (error) throw error;
 
-            // 如果查詢結果中存在該cat，則回應 'cat already exists'
+            // If the cat exists in the query result, respond with 'cat already exists'
             if (results.length > 0) {
                 res.status(409).send('cat already exists');
             } else {
-                // 否則，將用戶名和密碼插入 favorite 表中，回應 'add favorite Successfully'
+                // Otherwise, insert the username and password into the favorite table, responding with 'add favorite Successfully'
                 connection.query(
                     'INSERT INTO favorite (cat_id, user_id) VALUES (?, ?)',
                     [catid, userId],
