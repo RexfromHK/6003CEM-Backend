@@ -2,7 +2,7 @@
 const router = express.Router();
 const connection = require('./db');
 
-// add user
+// add favorite
 router.post('/add', (req, res) => {
     const { catid, userId } = req.body;
     console.log(catid);

@@ -4,6 +4,8 @@ const connection = require('./db');
 const multer = require('multer');
 const app = express();
 const bodyParser = require('body-parser');
+const api_secret = '6003CEM';
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -17,6 +19,14 @@ app.put('test/:catid', (req, res) => {
 
 // add cat
 router.post('/add', upload.single('image'), async (req, res) => {
+
+    // Check API secret
+    const api_key = req.headers['api-key'];
+    if (api_key !== api_secret) {
+        res.status(401).send('Invalid API key');
+        return;
+    }
+
     const { name, age, breed, location } = req.body;
     const userId = req.body.userId;
     const image = req.file.filename;
